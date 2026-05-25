@@ -1,0 +1,2980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>方紫寒 · 作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1e3a5f;
+      --paper: #ffffff;
+      --paper-dim: #dceaf5;
+      --bg-soft: #f6fbff;
+      --bg-mist: #edf5fc;
+      --accent: #0d8ecf;
+      --accent-deep: #0670a8;
+      --accent-soft: rgba(13, 142, 207, 0.12);
+      --gold: #5b9bd5;
+      --muted: #5c6b7a;
+      --slide-pad: clamp(2rem, 5vw, 4.5rem);
+      --radius: 14px;
+      --shadow: 0 16px 48px rgba(30, 58, 95, 0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: "Karla", "PingFang SC", sans-serif;
+      background: var(--bg-soft);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* Lightbox（点击图片放大） */
+    .lb-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 16, 28, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 2.5vw, 28px);
+      z-index: 9999;
+    }
+    .lb-backdrop.is-open { display: flex; }
+
+    .lb-panel {
+      width: min(1200px, 96vw);
+      max-height: 92vh;
+      height: auto;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .lb-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.78rem;
+    }
+
+    .lb-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 75%;
+    }
+
+    .lb-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .lb-btn {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.92);
+      padding: 6px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      line-height: 1;
+    }
+    .lb-btn:hover { background: rgba(255, 255, 255, 0.14); }
+    .lb-btn:active { background: rgba(255, 255, 255, 0.18); }
+
+    .lb-stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background: rgba(5, 16, 28, 0.25);
+      min-height: 0;
+    }
+
+    .lb-img,
+    .lb-video {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      border-radius: 10px;
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    .lb-video {
+      max-height: calc(92vh - 56px);
+      background: #000;
+    }
+
+    .lb-stage.is-video .lb-img { display: none; }
+    .lb-stage:not(.is-video) .lb-video { display: none; }
+
+    img[data-lightbox-ready="true"] { cursor: zoom-in; }
+
+    .ai-video-thumb {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      background: #0a1628;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .ai-video-thumb video {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+    }
+
+    .ai-video-thumb__play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(5, 16, 28, 0.28);
+      transition: background 0.2s ease;
+    }
+
+    .ai-video-thumb:hover .ai-video-thumb__play {
+      background: rgba(5, 16, 28, 0.42);
+    }
+
+    .ai-video-thumb__icon {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--accent-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    [data-video-lightbox-ready="true"] { cursor: pointer; }
+
+    @media (max-width: 720px) {
+      .lb-panel {
+        width: 96vw;
+        height: 92vh;
+        border-radius: 12px;
+      }
+      .lb-title { max-width: 64%; }
+    }
+
+    /* —— Nav —— */
+    .deck-nav {
+      position: fixed;
+      right: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .deck-nav a {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(30, 58, 95, 0.15);
+      border: 1px solid rgba(30, 58, 95, 0.25);
+      transition: transform 0.25s, background 0.25s;
+      text-indent: -9999px;
+      overflow: hidden;
+    }
+
+    .deck-nav a.active,
+    .deck-nav a:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.35);
+    }
+
+    .slide-counter {
+      position: fixed;
+      left: var(--slide-pad);
+      bottom: 1.5rem;
+      z-index: 100;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .slide-counter.light { color: rgba(255, 255, 255, 0.75); }
+
+    .hint {
+      position: fixed;
+      right: var(--slide-pad);
+      bottom: 1.5rem;
+      z-index: 100;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    .hint.light { color: rgba(255, 255, 255, 0.6); }
+
+    /* —— Slides —— */
+    .slide {
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      display: grid;
+      align-content: center;
+      padding: var(--slide-pad);
+      padding-right: clamp(3rem, 8vw, 5rem);
+    }
+
+    .slide--dark,
+    .slide--hero {
+      background: linear-gradient(145deg, #3d8fd4 0%, #1e6fad 45%, #1a5a8f 100%);
+      color: #fff;
+    }
+
+    .slide--light {
+      background: var(--bg-soft);
+    }
+
+    .slide--accent {
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-mist) 100%);
+      color: var(--ink);
+    }
+
+    .slide-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .slide--light .eyebrow { color: var(--accent); }
+
+    /* 项目层级：母项目 / 子项目 / 独立项目 */
+    .project-header {
+      margin-bottom: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .project-header__parent {
+      font-family: "Noto Serif SC", serif;
+      font-size: clamp(1.08rem, 2.15vw, 1.45rem);
+      letter-spacing: 0.03em;
+      color: var(--accent-deep);
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 0.22rem;
+    }
+
+    .project-header__sub {
+      font-size: 0.56rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      line-height: 1.3;
+      margin-bottom: 0.08rem;
+    }
+
+    .slide--ai-board .project-header + h2,
+    .slide--account-board .project-header + h2,
+    .slide--spring-board .project-header + h2,
+    .slide--milktea-board .project-header + h2,
+    .slide--xhs-board .project-header + h2 {
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      align-self: flex-start;
+      font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+      font-weight: 600;
+      line-height: 1.35;
+      margin: 0.1rem 0 0.35rem;
+      padding: 0.34rem 0.7rem 0.34rem 0.55rem;
+      color: var(--accent-deep);
+      background: linear-gradient(105deg, rgba(13, 142, 207, 0.11) 0%, rgba(13, 142, 207, 0.04) 72%);
+      border: 1px solid rgba(13, 142, 207, 0.16);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 9px 9px 0;
+      box-shadow: 0 2px 10px rgba(13, 142, 207, 0.07);
+    }
+
+    .project-header__sub strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .project-header--yuanbao {
+      padding-left: 0.45rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .project-header--solo {
+      padding-left: 0.45rem;
+      border-left: 3px solid rgba(13, 142, 207, 0.35);
+    }
+
+    .project-header--solo .project-header__parent {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .project-header--solo .project-header__parent strong {
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    h1, h2, h3 {
+      font-family: "Noto Serif SC", serif;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      letter-spacing: 0.04em;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      margin-bottom: 1.25rem;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      margin-top: 1rem;
+      max-width: 36em;
+      line-height: 1.7;
+    }
+
+    .slide--dark .subtitle,
+    .slide--hero .subtitle { color: rgba(255, 255, 255, 0.88); }
+    .slide--accent .subtitle { color: var(--muted); }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      margin-top: 2rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .slide--dark .meta-row,
+    .slide--hero .meta-row { color: rgba(255, 255, 255, 0.8); }
+
+    .meta-row span::before {
+      content: "·";
+      margin-right: 0.5rem;
+      color: var(--accent);
+    }
+
+    .meta-row span:first-child::before { content: none; margin: 0; }
+
+    /* Hero layout */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: end;
+    }
+
+    .hero-tag {
+      writing-mode: vertical-rl;
+      font-family: "Noto Serif SC", serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      color: rgba(255, 255, 255, 0.75);
+      opacity: 0.9;
+    }
+
+    .hero-line {
+      width: 80px;
+      height: 3px;
+      background: var(--accent);
+      margin: 2rem 0 1.5rem;
+    }
+
+    /* Stats */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .stat {
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 1.25rem 1rem;
+      border: 1px solid var(--paper-dim);
+    }
+
+    .slide--dark .stat,
+    .slide--hero .stat {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .slide--dark .stat strong,
+    .slide--hero .stat strong { color: #fff; }
+    .slide--dark .stat span,
+    .slide--hero .stat span { color: rgba(255, 255, 255, 0.85); }
+
+    .stat strong {
+      display: block;
+      font-family: "Noto Serif SC", serif;
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat span { font-size: 0.82rem; color: var(--muted); line-height: 1.4; }
+
+    /* Two column */
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 4vw, 3rem);
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .cols, .hero-grid { grid-template-columns: 1fr; }
+      .hero-tag { writing-mode: horizontal-tb; letter-spacing: 0.15em; }
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .bullet-list li {
+      padding-left: 1.1rem;
+      position: relative;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .slide--dark .bullet-list li,
+    .slide--hero .bullet-list li { color: rgba(255, 255, 255, 0.9); }
+
+    .bullet-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* Project cards */
+    .project-block {
+      margin-bottom: 2.5rem;
+    }
+
+    .project-block:last-child { margin-bottom: 0; }
+
+    .project-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      padding: 0.35rem 0.75rem;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+
+    .slide--dark .project-label,
+    .slide--hero .project-label {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    @media (max-width: 700px) {
+      .gallery { grid-template-columns: 1fr 1fr; }
+    }
+
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--paper-dim);
+      transition: transform 0.35s ease;
+    }
+
+    .gallery img:hover { transform: scale(1.02); }
+
+    .gallery--wide img { aspect-ratio: 16/10; }
+
+    /* Sub-project cards */
+    .sub-projects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 760px) {
+      .sub-projects { grid-template-columns: 1fr; }
+    }
+
+    .sub-card {
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sub-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(30, 58, 95, 0.12);
+    }
+
+    .sub-card img {
+      width: 100%;
+      min-height: 180px;
+      max-height: 320px;
+      aspect-ratio: 9/14;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border-bottom: 1px solid var(--paper-dim);
+      background: var(--bg-mist);
+    }
+
+    .sub-card--wide img { aspect-ratio: 16/11; }
+
+    .sub-card-body {
+      padding: 0.85rem 1rem 1rem;
+    }
+
+    .sub-card-body h4 {
+      font-family: "Noto Serif SC", serif;
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+      color: var(--ink);
+    }
+
+    .sub-card-body p {
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .metric-badge {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent-deep);
+      background: var(--accent-soft);
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    /* 完整展示截图（不裁切） */
+    .showcase-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .showcase-item {
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .showcase-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      background: #eef3f8;
+    }
+
+    .showcase-item figcaption {
+      padding: 0.65rem 1rem;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--muted);
+      border-top: 1px solid var(--paper-dim);
+    }
+
+    .showcase-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 720px) {
+      .showcase-pair { grid-template-columns: 1fr; }
+    }
+
+    /* 账号运营 · 单页紧凑看板（对齐新春页风格） */
+    .slide--account-board {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: clamp(0.9rem, 1.8vh, 1.5rem);
+      padding-bottom: 0.65rem;
+      overflow: hidden;
+    }
+
+    .slide--account-board .deco-num {
+      font-size: clamp(3rem, 8vw, 5rem);
+      opacity: 0.06;
+    }
+
+    .slide--account-board .slide-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      height: 100%;
+      max-height: calc(100dvh - 3rem);
+    }
+
+    .slide--account-board h2 {
+      margin-bottom: 0.2rem;
+    }
+
+    .slide--account-board .subtitle {
+      font-size: 0.82rem;
+      margin-top: 0;
+      margin-bottom: 0.1rem;
+      line-height: 1.35;
+    }
+
+    .slide--account-board .project-header { margin-bottom: 0.35rem; }
+
+    .slide--account-board .stat-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .slide--account-board .stat {
+      flex: 0 0 auto;
+      width: auto;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .slide--account-board .stat strong {
+      font-size: 1.05rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .slide--account-board .stat span {
+      font-size: 0.68rem;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .account-board {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      gap: 0.4rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .account-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 0;
+    }
+
+    .account-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 0;
+      padding: 0.4rem;
+      background: rgba(13, 142, 207, 0.04);
+      border: 1px dashed var(--paper-dim);
+      border-radius: 10px;
+    }
+
+    .account-group__label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      letter-spacing: 0.08em;
+      line-height: 1.35;
+    }
+
+     .slide--account-board .animate {
+      opacity: 1;
+      transform: none;
+    }
+
+    .account-pair {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+      min-height: 0;
+    }
+
+    @media (max-width: 900px) {
+      .account-board { grid-template-columns: 1fr; }
+      .account-pair { grid-template-columns: 1fr; }
+    }
+
+    /* 新春活动 · 单页紧凑看板 */
+    .slide--spring-board {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: clamp(0.9rem, 1.8vh, 1.5rem);
+      padding-bottom: 0.65rem;
+      overflow: hidden;
+    }
+
+    .slide--spring-board .deco-num {
+      font-size: clamp(3rem, 8vw, 5rem);
+      opacity: 0.06;
+    }
+
+    .slide--spring-board .slide-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      height: 100%;
+      max-height: calc(100dvh - 3rem);
+    }
+
+    .slide--spring-board h2 {
+      margin-bottom: 0.2rem;
+    }
+
+    .slide--spring-board .subtitle {
+      font-size: 0.82rem;
+      margin-top: 0;
+      line-height: 1.35;
+    }
+
+    .slide--spring-board .project-header { margin-bottom: 0.35rem; }
+
+    .spring-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.15rem 0 0.35rem;
+    }
+
+    .spring-stats span {
+      font-size: 0.68rem;
+      padding: 0.22rem 0.55rem;
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: 6px;
+      color: var(--ink);
+    }
+
+    .spring-stats strong {
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    .spring-board {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      gap: 0.4rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .spring-board__side {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 0;
+    }
+
+    .spring-board__side .spring-fig--3 {
+      flex: 0.95;
+    }
+
+    .spring-board__side .spring-row--posts {
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* 图1、4 组合区 */
+    .spring-group-124 {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.35rem;
+      padding: 0.4rem;
+      min-height: 0;
+      height: 100%;
+      background: rgba(13, 142, 207, 0.04);
+      border: 1px dashed var(--paper-dim);
+      border-radius: 10px;
+    }
+
+    .spring-group-124__label {
+      grid-column: 1 / -1;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      letter-spacing: 0.08em;
+    }
+
+    .spring-row--posts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      padding: 0.4rem;
+      background: rgba(13, 142, 207, 0.04);
+      border: 1px dashed var(--paper-dim);
+      border-radius: 10px;
+    }
+
+    .spring-row--posts__label {
+      grid-column: 1 / -1;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      letter-spacing: 0.08em;
+    }
+
+    .spring-fig--hit .spring-fig__tag {
+      background: rgba(13, 142, 207, 0.12);
+    }
+
+    .spring-fig--hit .spring-fig__cap strong {
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    .spring-fig {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(30, 58, 95, 0.05);
+    }
+
+    .spring-fig__tag {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent-deep);
+      background: var(--accent-soft);
+      padding: 0.18rem 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .spring-fig__img-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef3f8;
+      padding: 2px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .spring-fig__img-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .spring-fig--3,
+    .spring-row--posts .spring-fig {
+      min-height: 0;
+    }
+
+    .spring-fig--3 .spring-fig__img-wrap,
+    .spring-row--posts .spring-fig__img-wrap,
+    .spring-group-124 .spring-fig__img-wrap {
+      flex: 1;
+      height: auto;
+      max-height: none;
+    }
+
+    .spring-fig__cap {
+      font-size: 0.58rem;
+      line-height: 1.3;
+      padding: 0.25rem 0.4rem;
+      color: var(--muted);
+      border-top: 1px solid var(--paper-dim);
+      flex-shrink: 0;
+    }
+
+    .slide--spring-board .animate {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 900px) {
+      .spring-board { grid-template-columns: 1fr; }
+      .spring-group-124 { grid-template-columns: 1fr; }
+      .spring-group-124 .spring-fig--1,
+      .spring-group-124 .spring-fig--4 { grid-column: 1; }
+      .spring-row--posts { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* 奶茶钱评论活动 · 单页看板（样式对齐新春页） */
+    .slide--milktea-board {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: clamp(0.9rem, 1.8vh, 1.5rem);
+      padding-bottom: 0.65rem;
+      overflow: hidden;
+    }
+
+    .slide--milktea-board .deco-num {
+      font-size: clamp(3rem, 8vw, 5rem);
+      opacity: 0.06;
+    }
+
+    .slide--milktea-board .slide-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      height: 100%;
+      max-height: calc(100dvh - 3rem);
+    }
+
+    .slide--milktea-board h2 {
+      margin-bottom: 0.2rem;
+    }
+
+    .slide--milktea-board .subtitle {
+      font-size: 0.82rem;
+      margin-top: 0;
+      line-height: 1.35;
+    }
+
+    .slide--milktea-board .project-header { margin-bottom: 0.35rem; }
+
+    .milktea-board {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 0.4rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .milktea-part {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 0;
+      height: 100%;
+      padding: 0.4rem;
+      background: rgba(13, 142, 207, 0.04);
+      border: 1px dashed var(--paper-dim);
+      border-radius: 10px;
+    }
+
+    .milktea-part__title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      letter-spacing: 0.08em;
+      line-height: 1.35;
+      flex-shrink: 0;
+    }
+
+    .milktea-part__note {
+      font-size: 0.58rem;
+      line-height: 1.35;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .milktea-part__note strong {
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    .milktea-gallery {
+      flex: 1;
+      display: grid;
+      gap: 0.35rem;
+      min-height: 0;
+    }
+
+    .milktea-gallery--hot {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+
+    /* 路人互动：上下两行，每行一卡，卡内三张横排 */
+    .milktea-gallery--pass {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem;
+    }
+
+    .milktea-pass-stack {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      height: 100%;
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(30, 58, 95, 0.05);
+    }
+
+    .milktea-pass-stack__imgs {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.2rem;
+      padding: 0.28rem;
+      background: #eef3f8;
+      min-height: 0;
+    }
+
+    .milktea-pass-stack__shot {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .milktea-pass-stack__shot img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .milktea-pass-stack__cap {
+      font-size: 0.55rem;
+      line-height: 1.3;
+      padding: 0.22rem 0.38rem;
+      color: var(--muted);
+      border-top: 1px solid var(--paper-dim);
+      flex-shrink: 0;
+    }
+
+    .slide--milktea-board .milktea-gallery--hot .spring-fig {
+      min-height: 0;
+    }
+
+    .slide--milktea-board .milktea-gallery--hot .spring-fig__img-wrap {
+      flex: 1;
+      height: auto;
+      max-height: none;
+    }
+
+    .slide--milktea-board .animate {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 900px) {
+      .milktea-board { grid-template-columns: 1fr; }
+      .milktea-pass-stack__imgs { grid-template-columns: 1fr; }
+    }
+
+    /* AI 组 · 三段式自动化看板 */
+    .slide--ai-board {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: clamp(0.9rem, 1.8vh, 1.5rem);
+      padding-bottom: 0.65rem;
+      overflow: hidden;
+    }
+
+    .slide--ai-board .deco-num {
+      font-size: clamp(3rem, 8vw, 5rem);
+      opacity: 0.06;
+    }
+
+    .slide--ai-board .slide-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      height: 100%;
+      max-height: calc(100dvh - 3rem);
+    }
+
+    .slide--ai-board h2 {
+      margin-bottom: 0.2rem;
+    }
+
+    .slide--ai-board .subtitle {
+      font-size: 0.82rem;
+      margin-top: 0;
+      line-height: 1.35;
+    }
+
+    .slide--ai-board .project-header { margin-bottom: 0.35rem; }
+
+    .ai-board {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.4rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .ai-part {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 0;
+      height: 100%;
+      padding: 0.4rem;
+      background: rgba(13, 142, 207, 0.04);
+      border: 1px dashed var(--paper-dim);
+      border-radius: 10px;
+    }
+
+    .ai-part__title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      letter-spacing: 0.06em;
+      line-height: 1.35;
+      flex-shrink: 0;
+    }
+
+    .ai-part__note {
+      font-size: 0.58rem;
+      line-height: 1.35;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .ai-part__note strong {
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    .ai-gallery {
+      flex: 1;
+      display: grid;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem;
+      min-height: 0;
+    }
+
+    .ai-gallery--img2img {
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+
+    .ai-gallery--video-full {
+      grid-template-rows: 1fr;
+    }
+
+    .ai-gallery--video-full .spring-fig {
+      height: 100%;
+      min-height: 0;
+    }
+
+    .ai-gallery--video-full .ai-video-thumb {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .ai-img-stack {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      height: 100%;
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(30, 58, 95, 0.05);
+    }
+
+    .ai-img-stack__imgs {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.2rem;
+      padding: 0.28rem;
+      background: #eef3f8;
+      min-height: 0;
+    }
+
+    .ai-img-stack__shot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .ai-img-stack__shot img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .ai-img-stack__cap {
+      font-size: 0.55rem;
+      line-height: 1.3;
+      padding: 0.22rem 0.38rem;
+      color: var(--muted);
+      border-top: 1px solid var(--paper-dim);
+      flex-shrink: 0;
+    }
+
+    .slide--ai-board .spring-fig { min-height: 0; }
+
+    .slide--ai-board .spring-fig__img-wrap {
+      flex: 1;
+      height: auto;
+      max-height: none;
+    }
+
+    .slide--ai-board .animate {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 1100px) {
+      .ai-board { grid-template-columns: 1fr; }
+    }
+
+    /* 小红书矩阵 · 单页看板（对齐新春/奶茶页） */
+    .slide--xhs-board {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: clamp(0.9rem, 1.8vh, 1.5rem);
+      padding-bottom: 0.65rem;
+      overflow: hidden;
+    }
+
+    .slide--xhs-board .deco-num {
+      font-size: clamp(3rem, 8vw, 5rem);
+      opacity: 0.06;
+    }
+
+    .slide--xhs-board .slide-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      height: 100%;
+      max-height: calc(100dvh - 3rem);
+    }
+
+    .slide--xhs-board h2 {
+      margin-bottom: 0.2rem;
+    }
+
+    .slide--xhs-board .subtitle {
+      font-size: 0.82rem;
+      margin-top: 0;
+      line-height: 1.35;
+    }
+
+    .slide--xhs-board .project-header { margin-bottom: 0.35rem; }
+
+    .xhs-board {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.4rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .xhs-part {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 0;
+      height: 100%;
+      padding: 0.4rem;
+      background: rgba(13, 142, 207, 0.04);
+      border: 1px dashed var(--paper-dim);
+      border-radius: 10px;
+    }
+
+    .xhs-part__title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      letter-spacing: 0.08em;
+      line-height: 1.35;
+      flex-shrink: 0;
+    }
+
+    .xhs-part__note {
+      font-size: 0.58rem;
+      line-height: 1.35;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .xhs-part__note strong {
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    .xhs-shunzhi {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 0.35rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .xhs-notes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem;
+      min-height: 0;
+    }
+
+    .xhs-matrix {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 0.35rem;
+      min-height: 0;
+    }
+
+    .xhs-stack {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      height: 100%;
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(30, 58, 95, 0.05);
+    }
+
+    .xhs-stack__imgs {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.2rem;
+      padding: 0.28rem;
+      background: #eef3f8;
+      min-height: 0;
+    }
+
+    .xhs-stack__imgs--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .xhs-stack__shot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .xhs-stack__shot img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .xhs-stack__cap {
+      font-size: 0.55rem;
+      line-height: 1.3;
+      padding: 0.22rem 0.38rem;
+      color: var(--muted);
+      border-top: 1px solid var(--paper-dim);
+      flex-shrink: 0;
+    }
+
+    .slide--xhs-board .spring-fig { min-height: 0; }
+    .slide--xhs-board .spring-fig__img-wrap {
+      flex: 1;
+      height: auto;
+      max-height: none;
+    }
+
+    .slide--xhs-board .animate {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 900px) {
+      .xhs-board { grid-template-columns: 1fr; }
+      .xhs-shunzhi { grid-template-columns: 1fr; }
+      .xhs-stack__imgs { grid-template-columns: 1fr; }
+      .xhs-stack__imgs--2 { grid-template-columns: 1fr; }
+    }
+
+    /* 赛尔森 · 海外 KOL 实习 */
+    .slide--sailson-board {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: clamp(0.9rem, 1.8vh, 1.5rem);
+      padding-bottom: 0.65rem;
+      overflow: hidden;
+    }
+
+    .slide--sailson-board .deco-num {
+      font-size: clamp(3rem, 8vw, 5rem);
+      opacity: 0.06;
+    }
+
+    .slide--sailson-board .slide-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      height: 100%;
+      max-height: calc(100dvh - 3rem);
+    }
+
+    .slide--sailson-board h2 {
+      margin-bottom: 0.2rem;
+    }
+
+    .slide--sailson-board .subtitle {
+      font-size: 0.78rem;
+      margin-top: 0;
+      line-height: 1.35;
+    }
+
+    .slide--sailson-board .project-header { margin-bottom: 0.35rem; }
+
+    .sailson-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.28rem;
+      flex-shrink: 0;
+    }
+
+    .sailson-flow__step {
+      font-size: 0.56rem;
+      line-height: 1.3;
+      padding: 0.24rem 0.5rem;
+      color: var(--muted);
+      background: var(--paper);
+      border: 1px dashed var(--paper-dim);
+      border-radius: 999px;
+    }
+
+    .sailson-flow__step strong {
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    .sailson-board {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .sailson-project {
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+      min-height: 0;
+      height: 100%;
+      padding: 0.35rem;
+      background: rgba(13, 142, 207, 0.04);
+      border: 1px dashed var(--paper-dim);
+      border-radius: 10px;
+    }
+
+    .sailson-project__title {
+      font-size: 0.64rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    .sailson-project__note {
+      font-size: 0.56rem;
+      line-height: 1.32;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .sailson-project__note strong {
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+
+    .sailson-project__imgs {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.28rem;
+      min-height: 0;
+    }
+
+    .slide--sailson-board .sailson-project .spring-fig { min-height: 0; }
+
+    .slide--sailson-board .sailson-project .spring-fig__img-wrap {
+      flex: 1;
+      height: auto;
+      max-height: none;
+    }
+
+    .slide--sailson-board .sailson-project .spring-fig__cap {
+      font-size: 0.52rem;
+      padding: 0.2rem 0.32rem;
+    }
+
+    .slide--sailson-board .animate {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 1100px) {
+      .sailson-board { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .sailson-project__imgs { grid-template-columns: 1fr; }
+    }
+
+    /* 校园媒体 · 易拉宝 / 海报 */
+    .slide--campus-board {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: clamp(0.9rem, 1.8vh, 1.5rem);
+      padding-bottom: 0.65rem;
+      overflow: hidden;
+    }
+
+    .slide--campus-board .deco-num {
+      font-size: clamp(3rem, 8vw, 5rem);
+      opacity: 0.06;
+    }
+
+    .slide--campus-board .slide-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.32rem;
+      height: 100%;
+      max-height: calc(100dvh - 3rem);
+    }
+
+    .slide--campus-board h2 {
+      margin-bottom: 0.15rem;
+    }
+
+    .slide--campus-board .subtitle {
+      font-size: 0.78rem;
+      margin-top: 0;
+      line-height: 1.35;
+    }
+
+    .slide--campus-board .spring-stats {
+      margin: 0.1rem 0 0.2rem;
+    }
+
+    .campus-poster-wall {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.3rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .campus-poster {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(30, 58, 95, 0.05);
+    }
+
+    .campus-poster:nth-child(1) { grid-column: 1 / span 3; grid-row: 1; }
+    .campus-poster:nth-child(2) { grid-column: 4 / span 3; grid-row: 1; }
+    .campus-poster:nth-child(3) { grid-column: 7 / span 3; grid-row: 1; }
+    .campus-poster:nth-child(4) { grid-column: 10 / span 3; grid-row: 1; }
+    .campus-poster:nth-child(5) { grid-column: 2 / span 3; grid-row: 2; }
+    .campus-poster:nth-child(6) { grid-column: 5 / span 3; grid-row: 2; }
+    .campus-poster:nth-child(7) { grid-column: 8 / span 3; grid-row: 2; }
+
+    .campus-poster__img-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef3f8;
+      padding: 0.2rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .campus-poster__img-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .campus-poster__cap {
+      flex-shrink: 0;
+      font-size: 0.54rem;
+      line-height: 1.3;
+      padding: 0.2rem 0.35rem;
+      color: var(--muted);
+      border-top: 1px solid var(--paper-dim);
+      text-align: center;
+    }
+
+    .campus-poster__cap strong {
+      display: block;
+      font-size: 0.58rem;
+      color: var(--accent-deep);
+      font-weight: 600;
+      margin-bottom: 0.05rem;
+    }
+
+    .slide--campus-board .animate {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 1100px) {
+      .campus-poster-wall {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      }
+      .campus-poster:nth-child(1) { grid-column: 1; grid-row: 1; }
+      .campus-poster:nth-child(2) { grid-column: 2; grid-row: 1; }
+      .campus-poster:nth-child(3) { grid-column: 3; grid-row: 1; }
+      .campus-poster:nth-child(4) { grid-column: 4; grid-row: 1; }
+      .campus-poster:nth-child(5) { grid-column: 1; grid-row: 2; }
+      .campus-poster:nth-child(6) { grid-column: 2; grid-row: 2; }
+      .campus-poster:nth-child(7) { grid-column: 3; grid-row: 2; }
+    }
+
+    /* Timeline */
+    .timeline {
+      display: grid;
+      gap: 0;
+      margin-top: 1.5rem;
+    }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 7rem 1fr;
+      gap: 1.25rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--paper-dim);
+    }
+
+    .slide--dark .tl-item,
+    .slide--hero .tl-item { border-color: var(--paper-dim); }
+
+    .tl-item:last-child { border-bottom: none; }
+
+    .tl-date {
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+      padding-top: 0.15rem;
+    }
+
+    .tl-item h4 {
+      font-family: "Noto Serif SC", serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .tl-item p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+
+    /* Skills chips */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .chip {
+      font-size: 0.82rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--paper-dim);
+      background: #fff;
+    }
+
+    .slide--dark .chip,
+    .slide--hero .chip {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem 3rem;
+      margin-top: 2rem;
+    }
+
+    .contact-item strong {
+      display: block;
+      font-family: "Noto Serif SC", serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-item span { font-size: 0.9rem; color: var(--muted); }
+    .slide--dark .contact-item span,
+    .slide--hero .contact-item span { color: rgba(255, 255, 255, 0.85); }
+
+    .deco-num {
+      position: absolute;
+      right: var(--slide-pad);
+      top: var(--slide-pad);
+      font-family: "Noto Serif SC", serif;
+      font-size: clamp(4rem, 12vw, 8rem);
+      font-weight: 700;
+      color: var(--accent-soft);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .slide--dark .deco-num,
+    .slide--hero .deco-num { color: rgba(255, 255, 255, 0.12); }
+    .slide--accent .deco-num { color: var(--accent-soft); }
+
+    .slide--scroll {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: clamp(2.5rem, 6vh, 4rem);
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Video showcase */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    @media (max-width: 800px) {
+      .video-grid { grid-template-columns: 1fr; }
+    }
+
+    .video-card {
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .video-card video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0f172a;
+      object-fit: contain;
+    }
+
+    .video-card figcaption {
+      padding: 0.75rem 1rem 1rem;
+    }
+
+    .video-card figcaption h4 {
+      font-family: "Noto Serif SC", serif;
+      font-size: 0.92rem;
+      margin-bottom: 0.25rem;
+      color: var(--ink);
+    }
+
+    .video-card figcaption p {
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide.is-visible .animate {
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .animate { opacity: 0; }
+    .animate.d1 { animation-delay: 0.1s; }
+    .animate.d2 { animation-delay: 0.2s; }
+    .animate.d3 { animation-delay: 0.35s; }
+
+    /* 长内容页：必须写在 .animate 之后，否则会被 opacity:0 覆盖导致空白 */
+    .slide--scroll .animate {
+      opacity: 1;
+      transform: none;
+    }
+
+    .slide--scroll.is-visible .animate {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @media print {
+      html { scroll-snap-type: none; }
+      .deck-nav, .hint, .slide-counter { display: none; }
+      .slide { min-height: auto; page-break-after: always; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Lightbox -->
+  <div class="lb-backdrop" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
+    <div class="lb-panel" role="document">
+      <div class="lb-toolbar">
+        <div class="lb-title" id="lbTitle">图片预览</div>
+        <div class="lb-actions">
+          <button class="lb-btn" type="button" id="lbOpenNew">新窗口打开</button>
+          <button class="lb-btn" type="button" id="lbClose" aria-label="关闭">关闭</button>
+        </div>
+      </div>
+      <div class="lb-stage" id="lbStage">
+        <img class="lb-img" id="lbImg" alt="" />
+        <video class="lb-video" id="lbVideo" controls playsinline preload="metadata"></video>
+      </div>
+    </div>
+  </div>
+
+  <nav class="deck-nav" aria-label="幻灯片导航">
+    <a href="#s1" class="active">1</a>
+    <a href="#s2">2</a>
+    <a href="#s3">3</a>
+    <a href="#s4">4</a>
+    <a href="#s5">5</a>
+    <a href="#s6">6</a>
+    <a href="#s7">7</a>
+    <a href="#s8">8</a>
+    <a href="#s9">9</a>
+    <a href="#s10">10</a>
+    <a href="#s11">11</a>
+    <a href="#s12">12</a>
+  </nav>
+
+  <div class="slide-counter light" id="counter">01 / 12</div>
+  <p class="hint light" id="hint">↓ 滚动 · ← → 切换</p>
+
+  <!-- 01 Cover -->
+  <section class="slide slide--hero" id="s1" data-index="1">
+    <span class="deco-num">01</span>
+    <div class="slide-inner hero-grid">
+      <div>
+        <p class="eyebrow animate">Portfolio · 2026</p>
+        <h1 class="animate d1">方紫寒</h1>
+        <div class="hero-line animate d2"></div>
+        <p class="subtitle animate d2">
+          传播学硕士 · 舆情研判与新媒体增长<br />
+          西南政法大学 · 中共党员
+        </p>
+        <div class="meta-row animate d3">
+          <span>15579481027</span>
+          <span>1131614229@qq.com</span>
+          <span>随时到岗 · 每周 4–5 天</span>
+        </div>
+      </div>
+      <p class="hero-tag animate d3">舆情 · 增长 · 内容</p>
+    </div>
+  </section>
+
+  <!-- 02 Skills -->
+  <section class="slide slide--light" id="s2" data-index="2">
+    <span class="deco-num">02</span>
+    <div class="slide-inner">
+      <p class="eyebrow animate">Core Competencies</p>
+      <h2 class="animate d1">核心能力</h2>
+      <div class="cols animate d2">
+        <ul class="bullet-list">
+          <li><strong>舆情与信息处理</strong> — 多平台监测、清洗、研判与专报写作；百余篇内参/研判稿件经验</li>
+          <li><strong>AI 与自动化</strong> — 能将 Gemini、ChatGPT、Cursor 等工具用于选题策划、文案改写、Prompt 调试与执行提效；搭建「飞书多维表格 + DeepSeek」工作流，批量拆解对标爆款脚本结构，沉淀可复用 Prompt 与 SOP，支撑矩阵日更</li>
+          <li><strong>新媒体与增长</strong> — 熟练使用秀米完成公众号长图文排版与视觉统一；熟练使用剪映进行短视频剪辑包装，配合即梦批量产出封面与海报素材；具备视频号/抖音/小红书矩阵策划、分发与数据复盘能力，参与 0–1 账号孵化</li>
+          <li><strong>跨文化运营</strong> — 熟悉 X、Facebook、YouTube、Instagram 等海外社媒的内容形态与运营节奏，能独立完成发帖、互动与账号观察；CET-6 英文读写，具备海外 KOL 建联、Discord 社群维护与英文 Brief 撰写经验</li>
+        </ul>
+        <div>
+          <div class="stat-grid">
+            <div class="stat"><strong>5000+</strong><span>舆情监测日均处理（法制网）</span></div>
+            <div class="stat"><strong>2000+</strong><span>涉渝舆情信息处置（宣传部）</span></div>
+            <div class="stat"><strong>80%+</strong><span>AI 成稿与爆款对标相似度</span></div>
+            <div class="stat"><strong>65.3万</strong><span>元宝视频号单月累播峰值</span></div>
+          </div>
+          <div class="chips">
+            <span class="chip">Gemini / ChatGPT / Cursor</span>
+            <span class="chip">X / Facebook / YouTube / IG</span>
+            <span class="chip">秀米 / 公众号排版</span>
+            <span class="chip">剪映 / 即梦 / Kimi</span>
+            <span class="chip">Nox 达人拓线</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03–06 腾讯元宝 App 体验官推广 · 子项目 -->
+  <section class="slide slide--light slide--ai-board" id="s3" data-index="3">
+    <span class="deco-num">03</span>
+    <div class="slide-inner">
+      <div class="project-header project-header--yuanbao animate">
+        <p class="project-header__parent">项目名称：腾讯元宝 · App 体验官推广</p>
+        <p class="project-header__sub">子项目 <strong>1 / 4</strong> · AI 组</p>
+      </div>
+      <h2 class="animate d1">AI 组 · 内容自动化生产</h2>
+      <p class="subtitle animate d1">飞书多维表格 + AI 插件 → 批量文生图 → 数字人口播 · 三段流水线支撑矩阵日更</p>
+
+      <div class="spring-stats animate d2">
+        <span><strong>500+</strong> 爆款脚本拆解</span>
+        <span><strong>80%+</strong> 成稿结构相似度</span>
+        <span><strong>批量</strong> 链接入库自动提取</span>
+        <span><strong>SOP</strong> Prompt 沉淀复用</span>
+      </div>
+
+      <div class="ai-board animate d2">
+        <section class="ai-part">
+          <p class="ai-part__title">Part 1 · 飞书多维表格 + AI 插件</p>
+          <p class="ai-part__note">
+            批量导入对标<strong>短视频链接</strong>，用 AI 字段自动完成<strong>摘要提取 / 文案转写</strong>；
+            再调用 DeepSeek 插件做<strong>爆款结构拆解</strong>与仿写指令输出，形成可复用选题库。
+          </p>
+          <div class="ai-gallery">
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">多维表格</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/yuanbao-ai/part1-feishu-table.png" alt="飞书多维表格批量提取短视频文案" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">链接批量入库 · AI 字段自动提取摘要与完整文案</figcaption>
+            </figure>
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">爆款拆解</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/yuanbao-ai/part1-feishu-analysis.png" alt="DeepSeek分析爆款结构与特点" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">DeepSeek 指令列 · 自动输出「好在哪 / 怎么仿」分析结果</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="ai-part">
+          <p class="ai-part__title">Part 2 · AI 批量文生图</p>
+          <p class="ai-part__note">
+            根据脚本/栏目方向生成<strong>统一风格的封面与信息图</strong>（即梦等工具），
+            按<strong>粉色系 / 绿色系</strong>两套模板批量出图，固定主色与版式，支撑多账号日更。
+          </p>
+          <div class="ai-gallery ai-gallery--img2img">
+            <div class="ai-img-stack">
+              <div class="ai-img-stack__imgs">
+                <div class="ai-img-stack__shot"><img src="assets/yuanbao-ai/part2-pink-1.png" alt="粉色系封面：记忆力与抑郁" loading="lazy" /></div>
+                <div class="ai-img-stack__shot"><img src="assets/yuanbao-ai/part2-pink-2.png" alt="粉色系封面：鲨鱼换牙冷知识" loading="lazy" /></div>
+                <div class="ai-img-stack__shot"><img src="assets/yuanbao-ai/part2-pink-3.png" alt="粉色系封面：历史冷知识" loading="lazy" /></div>
+              </div>
+              <p class="ai-img-stack__cap">粉色系栏目 · 心理学 / 冷知识 · 统一大字报 + 简笔插画模板</p>
+            </div>
+            <div class="ai-img-stack">
+              <div class="ai-img-stack__imgs">
+                <div class="ai-img-stack__shot"><img src="assets/yuanbao-ai/part2-green-1.png" alt="绿色系封面：减脂误区" loading="lazy" /></div>
+                <div class="ai-img-stack__shot"><img src="assets/yuanbao-ai/part2-green-2.png" alt="绿色系封面：负能量食物" loading="lazy" /></div>
+                <div class="ai-img-stack__shot"><img src="assets/yuanbao-ai/part2-green-3.png" alt="绿色系封面：戒暴食" loading="lazy" /></div>
+              </div>
+              <p class="ai-img-stack__cap">绿色系栏目 · 减脂养生 · 笔记本风版式批量出图</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="ai-part">
+          <p class="ai-part__title">Part 3 · AI 数字人口播视频</p>
+          <p class="ai-part__note">
+            基于拆解后的热点脚本，用<strong>数字人形象 + 口播</strong>快速产出资讯短视频；
+            配合剪映「图文成片 / 智能包装」，把文案、封面、口播串成<strong>可日更的成片流水线</strong>。
+          </p>
+          <div class="ai-gallery ai-gallery--video-full">
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">口播成片</span>
+              <div
+                class="ai-video-thumb"
+                data-video-lightbox-ready="true"
+                data-video-src="assets/yuanbao-ai/part3-demo.mp4"
+                data-video-title="开盒热点 · 数字人口播成片"
+                role="button"
+                tabindex="0"
+                aria-label="点击放大播放数字人口播视频"
+              >
+                <video src="assets/yuanbao-ai/part3-demo.mp4" muted playsinline preload="metadata" aria-hidden="true"></video>
+                <span class="ai-video-thumb__play" aria-hidden="true"><span class="ai-video-thumb__icon">▶</span></span>
+              </div>
+              <figcaption class="spring-fig__cap">热点「开盒」脚本 → 数字人口播成片 · 点击可放大播放</figcaption>
+            </figure>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 腾讯元宝 · 账号运营 -->
+  <section class="slide slide--light slide--account-board" id="s4" data-index="4">
+    <span class="deco-num">04</span>
+    <div class="slide-inner">
+      <div class="project-header project-header--yuanbao animate">
+        <p class="project-header__parent">项目名称：腾讯元宝 · App 体验官推广</p>
+        <p class="project-header__sub">子项目 <strong>2 / 4</strong> · 账号运营</p>
+      </div>
+      <h2 class="animate d1">账号运营</h2>
+      <p class="subtitle animate d1">路边社速传等账号在视频号、快手等多平台 策划/审核/分发</p>
+      <div class="stat-grid animate d2">
+        <div class="stat"><strong>65.3万</strong><span>单月视频号累播</span></div>
+        <div class="stat"><strong>43.9万</strong><span>单条最高播放</span></div>
+        <div class="stat"><strong>22.7万</strong><span>单日播放峰值</span></div>
+      </div>
+
+      <div class="account-board animate d2">
+        <figure class="spring-fig spring-fig--1">
+          <span class="spring-fig__tag">图1 · 指标总览</span>
+          <div class="spring-fig__img-wrap">
+            <img src="assets/yuanbao-account/fig1-dashboard-63w.png" alt="视频号助手近30天关键指标" loading="lazy" />
+          </div>
+          <figcaption class="spring-fig__cap">近30天关键指标看板 · 播放 63.3 万、互动与转发同步增长</figcaption>
+        </figure>
+
+        <div class="account-right">
+          <div class="account-group">
+            <p class="account-group__label">图2 / 图3 · 内容管理与视频列表</p>
+            <div class="account-pair">
+              <figure class="spring-fig">
+                <span class="spring-fig__tag">图2</span>
+                <div class="spring-fig__img-wrap">
+                  <img src="assets/yuanbao-account/fig2-list-a.png" alt="内容管理列表A" loading="lazy" />
+                </div>
+                <figcaption class="spring-fig__cap">内容管理后台 · 标题/发布时间/互动数据一屏复盘</figcaption>
+              </figure>
+              <figure class="spring-fig">
+                <span class="spring-fig__tag">图3</span>
+                <div class="spring-fig__img-wrap">
+                  <img src="assets/yuanbao-account/fig3-list-b.png" alt="内容管理列表B" loading="lazy" />
+                </div>
+                <figcaption class="spring-fig__cap">多条视频数据对比 · 快速定位高潜内容与问题稿</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="account-group">
+            <p class="account-group__label">图4 / 图5 · 单条数据与账号主页</p>
+            <div class="account-pair">
+              <figure class="spring-fig spring-fig--hit">
+                <span class="spring-fig__tag">图4</span>
+                <div class="spring-fig__img-wrap">
+                  <img src="assets/yuanbao-account/fig5-profile-grid.png" alt="单条作品数据分析" loading="lazy" />
+                </div>
+                <figcaption class="spring-fig__cap">账号主页九宫格 · 统一封面与系列化栏目，便于矩阵分发</figcaption>
+              </figure>
+              <figure class="spring-fig">
+                <span class="spring-fig__tag">图5</span>
+                <div class="spring-fig__img-wrap">
+                  <img src="assets/yuanbao-account/fig4-mobile-analytics.png" alt="路边社速传账号主页矩阵" loading="lazy" />
+                </div>
+                <figcaption class="spring-fig__cap">单条数据分析 · 播放 43.6 万 · 互动 4469 · 新增关注 67</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 腾讯元宝 · 新春活动 -->
+  <section class="slide slide--light slide--spring-board" id="s5" data-index="5">
+    <span class="deco-num">05</span>
+    <div class="slide-inner">
+      <div class="project-header project-header--yuanbao animate">
+        <p class="project-header__parent">项目名称：腾讯元宝 · App 体验官推广</p>
+        <p class="project-header__sub">子项目 <strong>3 / 4</strong> · 新春红包</p>
+      </div>
+      <h2 class="animate d1">新春红包 · 春节专项推广</h2>
+      <p class="subtitle animate d1">「元宝春节红包创意挑战」· 活动期数据复盘与爆款稿件</p>
+
+      <div class="spring-stats animate d2">
+        <span><strong>31.5万</strong> 两周累播</span>
+        <span><strong>26.8万</strong> 单条最高播放</span>
+        <span><strong>2729</strong> 单条最高点赞</span>
+        <span><strong>1.5万+</strong> 话题稿点赞峰值</span>
+      </div>
+
+      <div class="spring-board animate d2">
+        <div class="spring-group-124">
+          <p class="spring-group-124__label">数据与爆款 · 图 1 / 4</p>
+          <figure class="spring-fig spring-fig--1">
+            <span class="spring-fig__tag">图1 · 数据总览</span>
+            <div class="spring-fig__img-wrap">
+              <img src="assets/yuanbao-spring/spring-dashboard-315k.png" alt="视频号近30天数据" loading="lazy" />
+            </div>
+            <figcaption class="spring-fig__cap">近30天播放 31.5万 · 活动期流量陡增（+185万%）</figcaption>
+          </figure>
+          <figure class="spring-fig spring-fig--4">
+            <span class="spring-fig__tag">图4 · 爆款单条</span>
+            <div class="spring-fig__img-wrap">
+              <img src="assets/yuanbao-spring/spring-post-cat-268k.png" alt="过年怼亲戚26.8万播放" loading="lazy" />
+            </div>
+            <figcaption class="spring-fig__cap">「过年怼亲戚问答公式」· 播放 26.8万 · 赞 2729</figcaption>
+          </figure>
+        </div>
+
+        <div class="spring-board__side">
+          <figure class="spring-fig spring-fig--3">
+            <span class="spring-fig__tag">图3 · 视频数据列表</span>
+            <div class="spring-fig__img-wrap">
+              <img src="assets/yuanbao-spring/spring-video-list.png" alt="活动期视频数据" loading="lazy" />
+            </div>
+            <figcaption class="spring-fig__cap">活动期视频复盘 · 完播率 / 均播 / 播放 / 点赞明细</figcaption>
+          </figure>
+
+          <div class="spring-row--posts">
+            <p class="spring-row--posts__label">单条爆款 · 图 5 / 6 · 两条均点赞过万</p>
+            <figure class="spring-fig spring-fig--hit spring-fig--5">
+              <span class="spring-fig__tag">图5 · 爆款单条</span>
+            <div class="spring-fig__img-wrap">
+              <img src="assets/yuanbao-spring/spring-post-boxes-15k.png" alt="居家安全话题爆款1.5万赞" loading="lazy" />
+            </div>
+            <figcaption class="spring-fig__cap"><strong>爆款单条</strong> · 居家安全话题 · 点赞 <strong>1.5万</strong> · 分享 5473</figcaption>
+          </figure>
+            <figure class="spring-fig spring-fig--hit spring-fig--6">
+              <span class="spring-fig__tag">图6 · 爆款单条</span>
+            <div class="spring-fig__img-wrap">
+              <img src="assets/yuanbao-spring/spring-post-anime-10k.png" alt="动漫共鸣话题爆款1万赞" loading="lazy" />
+            </div>
+            <figcaption class="spring-fig__cap"><strong>爆款单条</strong> · 动漫共鸣话题 · 点赞 <strong>1万</strong> · 藏 3359</figcaption>
+          </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 06 腾讯元宝 · 评论活动 -->
+  <section class="slide slide--light slide--milktea-board" id="s6" data-index="6">
+    <span class="deco-num">06</span>
+    <div class="slide-inner">
+      <div class="project-header project-header--yuanbao animate">
+        <p class="project-header__parent">项目名称：腾讯元宝 · App 体验官推广</p>
+        <p class="project-header__sub">子项目 <strong>4 / 4</strong> · 评论互动</p>
+      </div>
+      <h2 class="animate d1">每天一杯奶茶钱 · 评论互动</h2>
+      <p class="subtitle animate d1">规则与名额 · 热评阶梯（100～5万赞）· @元宝 蓝 V 触达 · 造梗 / 共鸣型评论</p>
+
+      <div class="spring-stats animate d2">
+        <span><strong>4</strong> 条千赞级热评样例</span>
+        <span><strong>80元</strong> 三级热评档（1000+赞）</span>
+        <span><strong>每日</strong> 跟评 + 集中审核</span>
+        <span><strong>6</strong> 组路人互动样例</span>
+      </div>
+
+      <div class="milktea-board animate d2">
+        <section class="milktea-part milktea-part--hot">
+          <h3 class="milktea-part__title">千赞热评</h3>
+          <p class="milktea-part__note">活动跟评冲榜 · 造梗 / 共鸣型评论易出热评 · 多条<strong>三级热评</strong>（1000+ 赞）：婚闹议题 <strong>1148</strong>、许我耀眼 <strong>1127</strong>、泛娱乐 <strong>1095</strong>、社媒共鸣 <strong>1272</strong> · @元宝 蓝 V 回复加持</p>
+          <div class="milktea-gallery milktea-gallery--hot" aria-label="千赞热评截图">
+            <figure class="spring-fig">
+              <div class="spring-fig__img-wrap"><img src="assets/yuanbao-milktea/hot-1148-hunao.png" alt="婚闹议题热评1148赞" loading="lazy" /></div>
+            </figure>
+            <figure class="spring-fig">
+              <div class="spring-fig__img-wrap"><img src="assets/yuanbao-milktea/hot-1127-drama.png" alt="许我耀眼热评1127赞" loading="lazy" /></div>
+            </figure>
+            <figure class="spring-fig">
+              <div class="spring-fig__img-wrap"><img src="assets/yuanbao-milktea/hot-1095-cp.png" alt="泛娱乐热评1095赞" loading="lazy" /></div>
+            </figure>
+            <figure class="spring-fig">
+              <div class="spring-fig__img-wrap"><img src="assets/yuanbao-milktea/hot-1272-empathy.png" alt="社媒共鸣热评1272赞" loading="lazy" /></div>
+            </figure>
+          </div>
+        </section>
+
+        <section class="milktea-part milktea-part--pass">
+          <h3 class="milktea-part__title">路人互动</h3>
+          <p class="milktea-part__note">跟评引发路人二次 @元宝 · 运营记录要求截取跟帖截图 · 每三张为一组</p>
+          <div class="milktea-gallery milktea-gallery--pass" aria-label="路人互动截图">
+            <div class="milktea-pass-stack">
+              <div class="milktea-pass-stack__imgs">
+                <div class="milktea-pass-stack__shot"><img src="assets/yuanbao-milktea/pass-tech-camera.png" alt="科技资讯路人追问元宝" loading="lazy" /></div>
+                <div class="milktea-pass-stack__shot"><img src="assets/yuanbao-milktea/pass-groom-news.png" alt="社会新闻路人倾诉元宝" loading="lazy" /></div>
+                <div class="milktea-pass-stack__shot"><img src="assets/yuanbao-milktea/pass-safety-accident.png" alt="热点争议路人艾特元宝" loading="lazy" /></div>
+              </div>
+              <p class="milktea-pass-stack__cap">科技科普 · 共情引导 · 价值观回应（AI 生成）</p>
+            </div>
+            <div class="milktea-pass-stack">
+              <div class="milktea-pass-stack__imgs">
+                <div class="milktea-pass-stack__shot"><img src="assets/yuanbao-milktea/pass-jipai-zhaolusi.png" alt="鸡排哥话题路人艾特元宝883赞" loading="lazy" /></div>
+                <div class="milktea-pass-stack__shot"><img src="assets/yuanbao-milktea/pass-hulatang.png" alt="河南文旅胡辣汤路人艾特元宝2087赞" loading="lazy" /></div>
+                <div class="milktea-pass-stack__shot"><img src="assets/yuanbao-milktea/pass-parenting-yoga.png" alt="育儿话题路人追问元宝" loading="lazy" /></div>
+              </div>
+              <p class="milktea-pass-stack__cap">文旅热梗 · 美食安利 · 生活咨询（AI 生成）</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+  <!-- 07 独立项目 · 小红书矩阵 -->
+  <section class="slide slide--light slide--xhs-board" id="s7" data-index="7">
+    <span class="deco-num">07</span>
+    <div class="slide-inner">
+      <div class="project-header project-header--yuanbao animate">
+        <p class="project-header__parent">项目名称：小红书矩阵 · 0–1 搭建</p>
+      </div>
+      <h2 class="animate d1">小红书矩阵 · 0–1 搭建与爆款方法论</h2>
+      <p class="subtitle animate d1">两列看板呈现：左侧「吮指原味喵」账号笔记数据（5 图）｜右侧「矩阵其他账号」爆款笔记数据（5 图）</p>
+
+      <div class="spring-stats animate d2">
+        <span><strong>1.2万+</strong> 单篇最高浏览</span>
+        <span><strong>700+</strong> 单篇最高评论</span>
+        <span><strong>1W+</strong> 矩阵单篇最高点赞</span>
+        <span><strong>1:1</strong> 赞藏比（干货模型）</span>
+      </div>
+
+      <div class="xhs-board animate d2">
+        <section class="xhs-part">
+          <p class="xhs-part__title">吮指原味喵 · 泛娱乐（星座人格 × 热点趋势）</p>
+          <p class="xhs-part__note">
+            文档要点：采用<strong>“信息图 + 短文案”</strong>轻量化表达；用<strong>反问句/贴标签</strong>设计评论区钩子，跑通<strong>高互动话题模型</strong>
+            （评论数可远超点赞）。全流程独立完成：选题 → 文案 → 视觉排版 → 发布 → 互动维护 → 复盘。
+          </p>
+
+          <div class="xhs-shunzhi">
+            <figure class="spring-fig spring-fig--hit">
+              <span class="spring-fig__tag">账号概览</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/xhs-matrix/shunzhi-profile.png" alt="吮指原味喵账号主页与笔记数据概览" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">定位「星座人格 + 娱乐热点」· 通过 A/B 测试快速定方向，沉淀稳定产出机制</figcaption>
+            </figure>
+
+            <div class="xhs-notes">
+              <figure class="spring-fig">
+                <span class="spring-fig__tag">笔记图1</span>
+                <div class="spring-fig__img-wrap">
+                  <img src="assets/xhs-matrix/shunzhi-note-1.png" alt="吮指原味喵笔记数据截图1" loading="lazy" />
+                </div>
+                <figcaption class="spring-fig__cap">高互动话题：标题前置冲突点 + 结尾反问，引导用户“团建”式评论</figcaption>
+              </figure>
+              <figure class="spring-fig">
+                <span class="spring-fig__tag">笔记图2</span>
+                <div class="spring-fig__img-wrap">
+                  <img src="assets/xhs-matrix/shunzhi-note-2.png" alt="吮指原味喵笔记数据截图2" loading="lazy" />
+                </div>
+                <figcaption class="spring-fig__cap">轻量信息图：大字报封面 + 关键信息点，提升停留与完读</figcaption>
+              </figure>
+              <figure class="spring-fig">
+                <span class="spring-fig__tag">笔记图3</span>
+                <div class="spring-fig__img-wrap">
+                  <img src="assets/xhs-matrix/shunzhi-note-3.png" alt="吮指原味喵笔记数据截图3" loading="lazy" />
+                </div>
+                <figcaption class="spring-fig__cap">复盘导向：用笔记数据反推封面/标题/选题，快速迭代点击与互动</figcaption>
+              </figure>
+              <figure class="spring-fig">
+                <span class="spring-fig__tag">笔记图4</span>
+                <div class="spring-fig__img-wrap">
+                  <img src="assets/xhs-matrix/shunzhi-note-4.png" alt="吮指原味喵笔记数据截图4" loading="lazy" />
+                </div>
+                <figcaption class="spring-fig__cap">「土象拍照」互动话题：<strong>482 赞 · 702 评</strong> · 用“只有××才懂？”的反问句式拉动团建式评论</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section class="xhs-part">
+          <p class="xhs-part__title">矩阵账号 · 赛马机制（互动 / 情绪 / 干货 三模型）</p>
+          <p class="xhs-part__note">
+            文档要点：摒弃硬广思维，主导搭建跨垂类矩阵（泛娱乐/热点锐评/科技资讯等），用 AI 提效跑通 SOP；
+            通过<strong>“给情绪、给干货、给舞台（互动）”</strong>三板斧，将偶然爆款变成高概率产出。
+          </p>
+
+          <div class="xhs-matrix">
+            <div class="xhs-stack">
+              <div class="xhs-stack__imgs">
+                <div class="xhs-stack__shot"><img src="assets/xhs-matrix/matrix-conglangmiao-note.png" alt="冲浪喵笔记：AI俳句锐评热梗" loading="lazy" /></div>
+                <div class="xhs-stack__shot"><img src="assets/xhs-matrix/matrix-conglangmiao-comments.png" alt="冲浪喵评论区互动数据" loading="lazy" /></div>
+                <div class="xhs-stack__shot"><img src="assets/xhs-matrix/matrix-conglangmiao-note-2.png" alt="冲浪喵笔记：热点案件锐评" loading="lazy" /></div>
+              </div>
+              <p class="xhs-stack__cap">冲浪喵（热点锐评）· AI 俳句冷幽默 + 立场鲜明文案，兼顾“有梗”与“可传播”</p>
+            </div>
+
+            <div class="xhs-stack">
+              <div class="xhs-stack__imgs xhs-stack__imgs--2">
+                <div class="xhs-stack__shot"><img src="assets/xhs-matrix/matrix-quduoduo-note.png" alt="趣多多plus笔记：情绪共鸣型爆款" loading="lazy" /></div>
+                <div class="xhs-stack__shot"><img src="assets/xhs-matrix/matrix-goutui-note.png" alt="狗腿准员工笔记：干货资讯型高收藏" loading="lazy" /></div>
+              </div>
+              <p class="xhs-stack__cap">趣多多plus（情绪共鸣）· 破万赞讨论｜狗腿准员工（资讯干货）· 结构化排版制造信息差，赞藏比接近 1:1</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 08 赛尔森 · 海外 KOL 实习 -->
+  <section class="slide slide--light slide--sailson-board" id="s8" data-index="8">
+    <span class="deco-num">08</span>
+    <div class="slide-inner">
+      <div class="project-header project-header--yuanbao animate">
+        <p class="project-header__parent">项目名称：赛尔森 · 海外 KOL 运营实习</p>
+      </div>
+      <h2 class="animate d1">海外 KOL 全链路运营 · 四项目并行交付</h2>
+      <p class="subtitle animate d1">2026.03 – 05 · NOX 达人筛选 → 模版邮件建联 → 引导入 DC → Discord 推进 → 合同 / 确认邮件</p>
+
+      <div class="sailson-flow animate d2">
+        <span class="sailson-flow__step"><strong>01</strong> NOX 按 brief 筛选</span>
+        <span class="sailson-flow__step"><strong>02</strong> 模版邮件建联</span>
+        <span class="sailson-flow__step"><strong>03</strong> 引导入官方 / 私人 DC</span>
+        <span class="sailson-flow__step"><strong>04</strong> DC 推进合作交付</span>
+        <span class="sailson-flow__step"><strong>05</strong> 合同 & 确认邮件</span>
+      </div>
+
+      <div class="spring-stats animate d2">
+        <span><strong>2000+</strong> 达人筛查</span>
+        <span><strong>2000+</strong> 招募邮件</span>
+        <span><strong>500+</strong> DC / 邮件触达</span>
+        <span><strong>4</strong> 游戏向项目并行</span>
+      </div>
+
+      <div class="sailson-board animate d2">
+        <article class="sailson-project">
+          <p class="sailson-project__title">8 Ball Poll</p>
+          <p class="sailson-project__note"><strong>官方 DC</strong> · 常规激励机制 · 确认合作邮件 · 多期签约 <strong>25+</strong> 人/期</p>
+          <div class="sailson-project__imgs">
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">DC 推进</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/sailson/poll-incentive.png" alt="8 Ball Poll 常规激励机制 DC 沟通" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">按地区/粉丝量级发布激励政策 · 达成合作后发确认邮件</figcaption>
+            </figure>
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">日常答疑</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/sailson/poll-dc-chat.png" alt="8 Ball Poll Discord 日常沟通" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">入群后确认链接与地区 · 日常沟通答疑</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="sailson-project">
+          <p class="sailson-project__title">BidKing</p>
+          <p class="sailson-project__note">邮件意向 → <strong>客户确认</strong> → 私人 DC · 直播交付 · <strong>拟写签约合同</strong> · 共签约 25 人</p>
+          <div class="sailson-project__imgs">
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">交付推进</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/sailson/bidking-delivery.png" alt="BidKing 交付内容推进" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">DC 确认内容与直播排期 · post 文案审核 · 开播 stand by</figcaption>
+            </figure>
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">签约合同</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/sailson/bidking-contract.png" alt="BidKing 达人合作合同" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">拟写并发送达人合作合同 · 对齐 brief / tracking link</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="sailson-project">
+          <p class="sailson-project__title">Solitaire Clash</p>
+          <p class="sailson-project__note">撰写 <strong>Promotion Brief</strong> + 建联邮件模版 · 按名单批量邮件触达</p>
+          <div class="sailson-project__imgs">
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">Brief</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/sailson/solitaire-brief.png" alt="Solitaire Clash Promotion Brief" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">独立撰写英文 Promotion Brief · 对齐客户需求</figcaption>
+            </figure>
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">邮件建联</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/sailson/solitaire-email.png" alt="Solitaire Clash 建联邮件" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">模版化邀约邮件 · 询问报价与合作意向</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="sailson-project">
+          <p class="sailson-project__title">8 Ball Strike</p>
+          <p class="sailson-project__note">Brief + 邮件模版 · 按<strong>定询名单</strong>精准建联 · 跟进邮件推进意向</p>
+          <div class="sailson-project__imgs">
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">Brief</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/sailson/strike-brief.png" alt="8 Ball Strike Promotion Brief" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">撰写项目 Promotion Brief · 统一对外话术</figcaption>
+            </figure>
+            <figure class="spring-fig">
+              <span class="spring-fig__tag">建联跟进</span>
+              <div class="spring-fig__img-wrap">
+                <img src="assets/sailson/strike-email.png" alt="8 Ball Strike 建联邮件" loading="lazy" />
+              </div>
+              <figcaption class="spring-fig__cap">建联邮件 + 跟进模版 · 持续触达意向达人</figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 Public opinion -->
+  <section class="slide slide--light" id="s9" data-index="9">
+    <span class="deco-num">09</span>
+    <div class="slide-inner">
+      <p class="eyebrow animate">Public Opinion & Policy</p>
+      <h2 class="animate d1">舆情研判 · 专报与政策风险评估</h2>
+      <div class="cols animate d2">
+        <div class="project-block">
+          <span class="project-label">中共重庆市委宣传部 · 2025.05 – 至今</span>
+          <ul class="bullet-list">
+            <li>涉渝重大舆情监测，累计处理信息 2000+ 条</li>
+            <li>独立撰写百余篇舆情分析 / 研判类稿件（内参 / 专报）</li>
+          </ul>
+        </div>
+        <div class="project-block">
+          <span class="project-label">法制网舆情监测中心 · 2025.08 – 2026.03</span>
+          <ul class="bullet-list">
+            <li>重庆、深圳、新疆等多地网络舆情监测，日均处理 5000+ 条</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cols animate d3" style="margin-top: 1rem;">
+        <div class="project-block">
+          <span class="project-label">涉港舆情周报 · 负责人</span>
+          <ul class="bullet-list">
+            <li>指定涉港敏感账号常态化监测，周度汇总形成专报</li>
+          </ul>
+        </div>
+        <div class="project-block">
+          <span class="project-label">两江新区政策舆情评估 · 核心成员</span>
+          <ul class="bullet-list">
+            <li>构建「政策条款 – 公众诉求 – 传播情绪」分析框架</li>
+            <li>3 份报告获两江新区采用；2 篇智库类、1 篇市政协采用（材料可证）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 蓝鲸传媒 -->
+  <section class="slide slide--light slide--scroll" id="s10" data-index="10">
+    <span class="deco-num">10</span>
+    <div class="slide-inner">
+      <p class="eyebrow animate">Campus Media · Video</p>
+      <h2 class="animate d1">蓝鲸传媒 · 摄影摄像部部长</h2>
+      <p class="subtitle animate d1">2025.05 – 至今 · 活动拍摄、现场剪辑与成片交付</p>
+      <ul class="bullet-list animate d2" style="max-width: 52em;">
+        <li>负责迎新、记者节路演、电影路演等校内大型活动的<strong>现场拍摄与视频制作</strong></li>
+        <li>统筹拍摄节奏与素材归档，配合部门完成活动宣发与回顾短片</li>
+        <li>「蓝鲸杯」新闻业务技能赛文学创作类<strong>三等奖</strong></li>
+      </ul>
+      <div class="video-grid animate d2">
+        <figure class="video-card">
+          <video controls playsinline preload="metadata" data-lanjing>
+            <source src="assets/lanjing-videos/01-yingxin.mp4" type="video/mp4" />
+          </video>
+          <figcaption>
+            <h4>2025 迎新现场直击</h4>
+            <p>迎新活动现场纪录，捕捉仪式流程与新生互动瞬间</p>
+          </figcaption>
+        </figure>
+        <figure class="video-card">
+          <video controls playsinline preload="metadata" data-lanjing title="第二届西政记者节预告">
+            <source src="assets/lanjing-videos/02-jizhejie-preview.mp4" type="video/mp4" />
+          </video>
+          <figcaption>
+            <h4>第二届西政记者节 · 预告</h4>
+            <p>记者节活动预热短片，突出活动主题与参与方式</p>
+          </figcaption>
+        </figure>
+        <figure class="video-card">
+          <video controls playsinline preload="metadata" data-lanjing title="第二届西政记者节青春路演活动">
+            <source src="assets/lanjing-videos/03-jizhejie-roadshow.mp4" type="video/mp4" />
+          </video>
+          <figcaption>
+            <h4>第二届西政记者节 · 青春路演</h4>
+            <p>记者节青春路演活动现场纪录与氛围剪辑</p>
+          </figcaption>
+        </figure>
+        <figure class="video-card">
+          <video controls playsinline preload="metadata" data-lanjing title="出入平安西政路演现场">
+            <source src="assets/lanjing-videos/04-churu-pingan.mp4" type="video/mp4" />
+          </video>
+          <figcaption>
+            <h4>《出入平安》西政路演现场</h4>
+            <p>电影进校园路演现场拍摄，记录互动与舞台环节</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 Campus & Creative -->
+  <section class="slide slide--light slide--campus-board" id="s11" data-index="11">
+    <span class="deco-num">11</span>
+    <div class="slide-inner">
+      <p class="eyebrow animate">Campus & Creative</p>
+      <h2 class="animate d1">校园媒体 · 赛创与内容创作</h2>
+      <p class="subtitle animate d1">
+        校研究生会新媒体部见习主席 · 蓝鲸传媒摄影摄像部部长 · 活动易拉宝 / 招新海报视觉定稿（点击可放大预览）
+      </p>
+
+      <div class="spring-stats animate d2">
+        <span><strong>7</strong> 易拉宝 / 主视觉海报</span>
+        <span><strong>140+</strong> 研会公众号原创</span>
+        <span><strong>直播</strong> 毕业晚会 / 学院春晚运营</span>
+        <span><strong>视频</strong> 蓝鲸作品见上一页</span>
+      </div>
+
+      <div class="campus-poster-wall animate d2" aria-label="易拉宝与海报作品">
+        <figure class="campus-poster">
+          <div class="campus-poster__img-wrap">
+            <img src="assets/campus-media/poster-qingzhi.png" alt="青志风华 · 校园志愿风采展览易拉宝" loading="lazy" />
+          </div>
+          <figcaption class="campus-poster__cap">
+            <strong>青志风华</strong>
+            新闻传播学院青志协 · 志愿风采展
+          </figcaption>
+        </figure>
+        <figure class="campus-poster">
+          <div class="campus-poster__img-wrap">
+            <img src="assets/campus-media/poster-journalist-fest.png" alt="首届记者节 · 青春路演活动易拉宝" loading="lazy" />
+          </div>
+          <figcaption class="campus-poster__cap">
+            <strong>记者节路演</strong>
+            首届西政记者节 · 青春路演
+          </figcaption>
+        </figure>
+        <figure class="campus-poster">
+          <div class="campus-poster__img-wrap">
+            <img src="assets/campus-media/poster-journal-launch.png" alt="菁菁期刊 首绽芳华 · 学报首发仪式" loading="lazy" />
+          </div>
+          <figcaption class="campus-poster__cap">
+            <strong>菁菁期刊</strong>
+            《西政新闻传播学报》首发仪式
+          </figcaption>
+        </figure>
+        <figure class="campus-poster">
+          <div class="campus-poster__img-wrap">
+            <img src="assets/campus-media/poster-book-review.png" alt="燃爆书海 笔战群雄 · 书评大赛交流会" loading="lazy" />
+          </div>
+          <figcaption class="campus-poster__cap">
+            <strong>燃爆书海</strong>
+            全国大学生书评大赛 · 西政站
+          </figcaption>
+        </figure>
+        <figure class="campus-poster">
+          <div class="campus-poster__img-wrap">
+            <img src="assets/campus-media/poster-xinhua-lecture.png" alt="新华讲座第25期 · 新闻民族志学术讲座" loading="lazy" />
+          </div>
+          <figcaption class="campus-poster__cap">
+            <strong>新华讲座</strong>
+            第25期 · 新闻民族志专题
+          </figcaption>
+        </figure>
+        <figure class="campus-poster">
+          <div class="campus-poster__img-wrap">
+            <img src="assets/campus-media/poster-master-checkin.png" alt="2024级硕士研究生报到处易拉宝" loading="lazy" />
+          </div>
+          <figcaption class="campus-poster__cap">
+            <strong>硕士报到处</strong>
+            2024级研究生迎新主视觉
+          </figcaption>
+        </figure>
+        <figure class="campus-poster">
+          <div class="campus-poster__img-wrap">
+            <img src="assets/campus-media/poster-lanjing-recruit.png" alt="蓝鲸传媒2025招新海报" loading="lazy" />
+          </div>
+          <figcaption class="campus-poster__cap">
+            <strong>蓝鲸传媒</strong>
+            2025 招新 · 策划 / 摄影 / 剪辑
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 Contact -->
+  <section class="slide slide--hero" id="s12" data-index="12">
+    <span class="deco-num">12</span>
+    <div class="slide-inner">
+      <p class="eyebrow animate">Thank You</p>
+      <h2 class="animate d1">期待与您进一步交流</h2>
+      <p class="subtitle animate d1">
+        传播学硕士 · 软件工程本科背景<br />
+        舆情研判 × 新媒体增长 × AI 内容自动化
+      </p>
+      <div class="contact-grid animate d2">
+        <div class="contact-item">
+          <strong>电话</strong>
+          <span>15579481027</span>
+        </div>
+        <div class="contact-item">
+          <strong>邮箱</strong>
+          <span>1131614229@qq.com</span>
+        </div>
+        <div class="contact-item">
+          <strong>教育</strong>
+          <span>西南政法大学 传播学硕士 · 江西农业大学 软件工程本科</span>
+        </div>
+        <div class="contact-item">
+          <strong>实习意向</strong>
+          <span>可连续实习 3–6 个月 · 每周 4–5 天</span>
+        </div>
+      </div>
+      <div class="stat-grid animate d3" style="margin-top: 2.5rem; max-width: 720px;">
+        <div class="stat"><strong>智库采用</strong><span>2 篇中宣部 · 1 篇市政协</span></div>
+        <div class="stat"><strong>政策报告</strong><span>3 份两江新区采用</span></div>
+        <div class="stat"><strong>党员</strong><span>中共党员</span></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const slides = [...document.querySelectorAll(".slide")];
+    const navLinks = [...document.querySelectorAll(".deck-nav a")];
+    const counter = document.getElementById("counter");
+    const hint = document.getElementById("hint");
+    const total = slides.length;
+
+    const pad = (n) => String(n).padStart(2, "0");
+
+    const setActive = (index) => {
+      const i = Math.max(0, Math.min(index, total - 1));
+      navLinks.forEach((a, j) => a.classList.toggle("active", j === i));
+      counter.textContent = `${pad(i + 1)} / ${pad(total)}`;
+      const dark = slides[i].classList.contains("slide--dark") || slides[i].classList.contains("slide--hero");
+      counter.classList.toggle("light", dark);
+      hint.classList.toggle("light", dark);
+    };
+
+    const revealSlide = (slide) => {
+      if (!slide) return;
+      slide.classList.add("is-visible");
+      const idx = slides.indexOf(slide);
+      if (idx >= 0) setActive(idx);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) revealSlide(entry.target);
+        });
+      },
+      { threshold: [0.12, 0.35, 0.55] }
+    );
+
+    slides.forEach((s) => observer.observe(s));
+
+    const syncFromHash = () => {
+      const id = location.hash.replace("#", "");
+      const slide = id ? document.getElementById(id) : null;
+      if (slide) {
+        slide.scrollIntoView({ behavior: "instant", block: "start" });
+        revealSlide(slide);
+      }
+    };
+
+    window.addEventListener("hashchange", syncFromHash);
+    syncFromHash();
+
+    document.addEventListener("keydown", (e) => {
+      const current = slides.findIndex((s) => {
+        const r = s.getBoundingClientRect();
+        return r.top >= -window.innerHeight * 0.45 && r.top <= window.innerHeight * 0.45;
+      });
+      if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === " ") {
+        e.preventDefault();
+        const next = slides[Math.min(current + 1, total - 1)];
+        next?.scrollIntoView({ behavior: "smooth" });
+      }
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        const prev = slides[Math.max(current - 1, 0)];
+        prev?.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+
+    revealSlide(slides[0]);
+
+    // 同时只播放一个蓝鲸视频，避免多路音频叠加
+    const lanjingVideos = [...document.querySelectorAll("video[data-lanjing]")];
+    lanjingVideos.forEach((v) => {
+      v.addEventListener("play", () => {
+        lanjingVideos.forEach((other) => {
+          if (other !== v && !other.paused) other.pause();
+        });
+      });
+    });
+
+    // Lightbox：点击图片/视频放大预览
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbVideo = document.getElementById("lbVideo");
+    const lbTitle = document.getElementById("lbTitle");
+    const lbClose = document.getElementById("lbClose");
+    const lbOpenNew = document.getElementById("lbOpenNew");
+    const lbStage = document.getElementById("lbStage");
+    let lbCurrentSrc = "";
+    let lbMode = "image";
+
+    const fitLightboxImage = () => {
+      if (!lb.classList.contains("is-open") || lbMode !== "image") return;
+      if (!lbImg.src) return;
+      const nw = lbImg.naturalWidth || 0;
+      const nh = lbImg.naturalHeight || 0;
+      if (!nw || !nh) return;
+      const rect = lbStage.getBoundingClientRect();
+      const availW = Math.max(1, rect.width - 8);
+      const availH = Math.max(1, rect.height - 8);
+      const scale = Math.min(availW / nw, availH / nh, 1);
+      lbImg.style.width = `${Math.floor(nw * scale)}px`;
+      lbImg.style.height = `${Math.floor(nh * scale)}px`;
+    };
+
+    const fitLightboxVideo = () => {
+      if (!lb.classList.contains("is-open") || lbMode !== "video") return;
+      const rect = lbStage.getBoundingClientRect();
+      const availW = Math.max(1, rect.width - 8);
+      const availH = Math.max(1, rect.height - 8);
+      lbVideo.style.width = `${Math.floor(availW)}px`;
+      lbVideo.style.maxHeight = `${Math.floor(availH)}px`;
+    };
+
+    const openLightboxImage = (img) => {
+      if (!img || !img.src) return;
+      lbMode = "image";
+      lbStage.classList.remove("is-video");
+      lbCurrentSrc = img.currentSrc || img.src;
+      lbImg.src = lbCurrentSrc;
+      lbImg.alt = img.alt || "图片预览";
+      lbTitle.textContent = img.alt || "图片预览";
+      lbImg.style.width = "";
+      lbImg.style.height = "";
+      lbVideo.pause();
+      lbVideo.removeAttribute("src");
+      lbVideo.load();
+      lb.classList.add("is-open");
+      document.documentElement.style.overflow = "hidden";
+    };
+
+    const openLightboxVideo = (src, title) => {
+      if (!src) return;
+      lbMode = "video";
+      lbStage.classList.add("is-video");
+      lbCurrentSrc = src;
+      lbImg.src = "";
+      lbImg.alt = "";
+      lbImg.style.width = "";
+      lbImg.style.height = "";
+      lbVideo.src = src;
+      lbVideo.currentTime = 0;
+      lbTitle.textContent = title || "视频预览";
+      lb.classList.add("is-open");
+      document.documentElement.style.overflow = "hidden";
+      fitLightboxVideo();
+      lbVideo.play().catch(() => {});
+    };
+
+    const closeLightbox = () => {
+      lb.classList.remove("is-open");
+      lbStage.classList.remove("is-video");
+      lbMode = "image";
+      lbImg.src = "";
+      lbImg.alt = "";
+      lbImg.style.width = "";
+      lbImg.style.height = "";
+      lbVideo.pause();
+      lbVideo.removeAttribute("src");
+      lbVideo.load();
+      lbTitle.textContent = "图片预览";
+      lbCurrentSrc = "";
+      document.documentElement.style.overflow = "";
+    };
+
+    document.querySelectorAll(".slide img").forEach((img) => {
+      img.setAttribute("data-lightbox-ready", "true");
+    });
+
+    document.addEventListener("click", (e) => {
+      const target = e.target;
+      if (target instanceof HTMLImageElement && target.dataset.lightboxReady === "true") {
+        openLightboxImage(target);
+        return;
+      }
+      const videoTrigger = target instanceof Element ? target.closest("[data-video-lightbox-ready]") : null;
+      if (videoTrigger) {
+        const src = videoTrigger.getAttribute("data-video-src");
+        const title = videoTrigger.getAttribute("data-video-title");
+        if (src) openLightboxVideo(src, title);
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && active.dataset.videoLightboxReady === "true") {
+        const src = active.getAttribute("data-video-src");
+        const title = active.getAttribute("data-video-title");
+        if (src) openLightboxVideo(src, title);
+      }
+    });
+
+    lbImg.addEventListener("load", fitLightboxImage);
+
+    window.addEventListener("resize", () => {
+      fitLightboxImage();
+      fitLightboxVideo();
+    });
+
+    lbClose?.addEventListener("click", closeLightbox);
+    lbOpenNew?.addEventListener("click", () => {
+      if (!lbCurrentSrc) return;
+      window.open(lbCurrentSrc, "_blank", "noopener,noreferrer");
+    });
+
+    lb?.addEventListener("click", (e) => {
+      if (e.target === lb) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lb.classList.contains("is-open")) closeLightbox();
+    });
+  </script>
+</body>
+</html>
