@@ -270,6 +270,128 @@
       color: #fff;
     }
 
+    /* Cover — 与内页同色系浅蓝底 */
+    .slide--cover {
+      background:
+        radial-gradient(ellipse 68% 48% at 100% 0%, rgba(13, 142, 207, 0.09) 0%, transparent 56%),
+        radial-gradient(ellipse 52% 42% at 0% 100%, rgba(13, 142, 207, 0.06) 0%, transparent 52%),
+        linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-mist) 100%);
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .slide--cover .deco-num {
+      color: var(--accent-soft);
+    }
+
+    .slide--cover .eyebrow {
+      color: var(--accent);
+    }
+
+    .slide--cover .hero-line {
+      background: var(--accent);
+      margin: 1.5rem 0 1.15rem;
+    }
+
+    .slide--cover .subtitle {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .slide--cover .meta-row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+      color: var(--muted);
+      margin-top: 1.35rem;
+    }
+
+    .slide--cover .meta-row span::before {
+      content: none;
+      margin: 0;
+    }
+
+    .cover-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+      gap: clamp(1.75rem, 4vw, 3.5rem);
+      align-items: center;
+    }
+
+    .cover-panel {
+      background: var(--paper);
+      border: 1px solid var(--paper-dim);
+      border-radius: var(--radius);
+      padding: clamp(1.25rem, 2.5vw, 1.75rem);
+      box-shadow: var(--shadow);
+    }
+
+    .cover-panel__title {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .cover-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .cover-metric {
+      padding: 0.75rem 0.85rem;
+      background: rgba(13, 142, 207, 0.05);
+      border: 1px solid var(--paper-dim);
+      border-radius: 10px;
+    }
+
+    .cover-metric strong {
+      display: block;
+      font-family: "Noto Serif SC", serif;
+      font-size: 1.15rem;
+      color: var(--accent-deep);
+      margin-bottom: 0.2rem;
+      line-height: 1.2;
+    }
+
+    .cover-metric span {
+      font-size: 0.72rem;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    .cover-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .cover-chip {
+      font-size: 0.78rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--paper-dim);
+      background: var(--bg-soft);
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .cover-chip--accent {
+      background: rgba(13, 142, 207, 0.08);
+      border-color: rgba(13, 142, 207, 0.18);
+      color: var(--accent-deep);
+      font-weight: 500;
+    }
+
+    @media (max-width: 860px) {
+      .cover-layout { grid-template-columns: 1fr; }
+      .cover-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
     .slide--light {
       background: var(--bg-soft);
     }
@@ -1984,14 +2106,14 @@
     <a href="#s12">12</a>
   </nav>
 
-  <div class="slide-counter light" id="counter">01 / 12</div>
-  <p class="hint light" id="hint">↓ 滚动 · ← → 切换</p>
+  <div class="slide-counter" id="counter">01 / 12</div>
+  <p class="hint" id="hint">↓ 滚动 · ← → 切换</p>
 
   <!-- 01 Cover -->
-  <section class="slide slide--hero" id="s1" data-index="1">
+  <section class="slide slide--cover" id="s1" data-index="1">
     <span class="deco-num">01</span>
-    <div class="slide-inner hero-grid">
-      <div>
+    <div class="slide-inner cover-layout">
+      <div class="cover-main">
         <p class="eyebrow animate">Portfolio · 2026</p>
         <h1 class="animate d1">方紫寒</h1>
         <div class="hero-line animate d2"></div>
@@ -2000,12 +2122,45 @@
           西南政法大学 · 中共党员
         </p>
         <div class="meta-row animate d3">
-          <span>15579481027</span>
-          <span>1131614229@qq.com</span>
-          <span>随时到岗 · 每周 4–5 天</span>
+          <span>联系方式：15579481027</span>
+          <span>邮箱：1131614229@qq.com</span>
+          <span>随时到岗，可实习3-6个月 每周可出勤4-5天</span>
         </div>
       </div>
-      <p class="hero-tag animate d3">舆情 · 增长 · 内容</p>
+      <aside class="cover-panel animate d3">
+        <p class="cover-panel__title">能力与项目涉猎</p>
+        <div class="cover-metrics">
+          <div class="cover-metric">
+            <strong>65.3万</strong>
+            <span>元宝视频号单月累播峰值</span>
+          </div>
+          <div class="cover-metric">
+            <strong>5000+</strong>
+            <span>舆情监测日均处理量</span>
+          </div>
+          <div class="cover-metric">
+            <strong>500+</strong>
+            <span>爆款脚本 AI 拆解</span>
+          </div>
+          <div class="cover-metric">
+            <strong>2000+</strong>
+            <span>海外达人筛查与建联</span>
+          </div>
+        </div>
+        <div class="cover-chips">
+          <span class="cover-chip cover-chip--accent">舆情研判与专报</span>
+          <span class="cover-chip cover-chip--accent">AI 内容生产</span>
+          <span class="cover-chip">飞书 + DeepSeek 工作流</span>
+          <span class="cover-chip">爆款脚本拆解</span>
+          <span class="cover-chip">视频号 / 抖音 / 小红书矩阵</span>
+          <span class="cover-chip">剪映剪辑 · 即梦出图</span>
+          <span class="cover-chip">数字人口播</span>
+          <span class="cover-chip">秀米 · 公众号排版</span>
+          <span class="cover-chip">海外 KOL 建联</span>
+          <span class="cover-chip">Discord 社群运营</span>
+          <span class="cover-chip">Prompt &amp; SOP 沉淀</span>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -2054,7 +2209,6 @@
 
       <div class="spring-stats animate d2">
         <span><strong>500+</strong> 爆款脚本拆解</span>
-        <span><strong>80%+</strong> 成稿结构相似度</span>
         <span><strong>批量</strong> 链接入库自动提取</span>
         <span><strong>SOP</strong> Prompt 沉淀复用</span>
       </div>
@@ -2113,8 +2267,7 @@
         <section class="ai-part">
           <p class="ai-part__title">Part 3 · AI 数字人口播视频</p>
           <p class="ai-part__note">
-            基于拆解后的热点脚本，用<strong>数字人形象 + 口播</strong>快速产出资讯短视频；
-            配合剪映「图文成片 / 智能包装」，把文案、封面、口播串成<strong>可日更的成片流水线</strong>。
+            基于拆解后的热点脚本，用<strong>数字人形象 + 口播</strong>快速产出资讯短视频。
           </p>
           <div class="ai-gallery ai-gallery--video-full">
             <figure class="spring-fig">
@@ -2235,7 +2388,7 @@
             <div class="spring-fig__img-wrap">
               <img src="assets/yuanbao-spring/spring-dashboard-315k.png" alt="视频号近30天数据" loading="lazy" />
             </div>
-            <figcaption class="spring-fig__cap">近30天播放 31.5万 · 活动期流量陡增（+185万%）</figcaption>
+            <figcaption class="spring-fig__cap">近30天播放 31.5万</figcaption>
           </figure>
           <figure class="spring-fig spring-fig--4">
             <span class="spring-fig__tag">图4 · 爆款单条</span>
@@ -2318,7 +2471,7 @@
 
         <section class="milktea-part milktea-part--pass">
           <h3 class="milktea-part__title">路人互动</h3>
-          <p class="milktea-part__note">跟评引发路人二次 @元宝 · 运营记录要求截取跟帖截图 · 每三张为一组</p>
+          <p class="milktea-part__note">跟评引发路人二次 @元宝</p>
           <div class="milktea-gallery milktea-gallery--pass" aria-label="路人互动截图">
             <div class="milktea-pass-stack">
               <div class="milktea-pass-stack__imgs">
@@ -2409,7 +2562,7 @@
         </section>
 
         <section class="xhs-part">
-          <p class="xhs-part__title">矩阵账号 · 赛马机制（互动 / 情绪 / 干货 三模型）</p>
+          <p class="xhs-part__title">矩阵账号（互动 / 情绪 / 干货 三模型）</p>
           <p class="xhs-part__note">
             文档要点：摒弃硬广思维，主导搭建跨垂类矩阵（泛娱乐/热点锐评/科技资讯等），用 AI 提效跑通 SOP；
             通过<strong>“给情绪、给干货、给舞台（互动）”</strong>三板斧，将偶然爆款变成高概率产出。
